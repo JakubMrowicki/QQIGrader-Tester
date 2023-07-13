@@ -18,19 +18,27 @@ namespace QQIGrader
             ofd.Filter = "CSV (*.csv)|*.csv";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                if (File.ReadAllLines(ofd.FileName).First().Length > 0)
+                try
                 {
-                    try
+                    if (File.ReadAllLines(ofd.FileName).First().Length > 0)
                     {
-                        testCases = File.ReadAllLines(ofd.FileName).Skip(1).Select(x => TestCases.FromCsv(x)).ToList();
-                        runTests();
-                    } catch {
-                        MessageBox.Show("Error opening this file.", "Info");
+                        try
+                        {
+                            testCases = File.ReadAllLines(ofd.FileName).Skip(1).Select(x => TestCases.FromCsv(x)).ToList();
+                            runTests();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Error opening this file.", "Info");
+                        }
                     }
-                }
-                else
+                    else
+                    {
+                        MessageBox.Show("Your csv file is empty.", "Info");
+                    }
+                } catch
                 {
-                    MessageBox.Show("Your csv file is empty.", "Info");
+                    MessageBox.Show("Your csv file may be open in another program.", "Info");
                 }
             } 
             else return;
@@ -39,26 +47,17 @@ namespace QQIGrader
         private void runTests()
         {
             int passes = 0;
-            this.dataResults.Rows.Clear();
+            if (this.dataResults.Rows.Count > 0) this.dataResults.Rows.Clear();
             for (int i = 0; i < testCases.Count; i++)
             {
                 bool testResult = testCases[i].Expected == getGrade(testCases[i].Input);
-                if (testResult)
-                {
-                    passes++;
-                    txtRes.Text = $"{passes}/{testCases.Count}";
-                }
+                if (testResult) passes++;
                 this.dataResults.Rows.Add($"{(i + 1)}", $"{testCases[i].Input}", $"{testCases[i].Expected}", getGrade(testCases[i].Input), $"{(testResult ? "Pass" : "Fail")}");
+                this.dataResults.Rows[i].DefaultCellStyle.BackColor = testResult ? Color.Green : Color.Red;
             }
 
-            if (passes == testCases.Count && testCases.Count > 0)
-            {
-                lblResult.Text = "All Test Passed!";
-            }
-            else
-            {
-                lblResult.Text = "Some tests failed, see results below.";
-            }
+            txtRes.Text = $"{passes}/{testCases.Count}";
+            lblResult.Text = (passes == testCases.Count) ? "All Test Passed!" : "Some tests failed, see results below.";
         }
 
         private string getGrade(int grade)
@@ -67,19 +66,19 @@ namespace QQIGrader
             {
                 case >= 80:
                     {
-                        return grade > 100 ? "Invalid" : "Distinction";
+                        return grade > 100 ? "Invalid" : "Distincton";
                     }
                 case >= 65:
                     {
                         return "Merit";
                     }
-                case >= 50:
+                case > 50:
                     {
                         return "Pass";
                     }
                 default:
                     {
-                        return grade < 0 ? "Invalid" : "Unsuccessful";
+                        return grade < 0 ? "Invalid" : "Unsuccesful";
                     }
             }
         }
