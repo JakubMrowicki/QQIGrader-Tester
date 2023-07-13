@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QQIGrader", "QQIGrader.csproj", "{4981AA7D-645A-4A1F-BA25-5FC2193DEBAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4981AA7D-645A-4A1F-BA25-5FC2193DEBAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4981AA7D-645A-4A1F-BA25-5FC2193DEBAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4981AA7D-645A-4A1F-BA25-5FC2193DEBAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4981AA7D-645A-4A1F-BA25-5FC2193DEBAA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1682A95A-109E-4805-AE3C-142A78FC2974}
+	EndGlobalSection
+EndGlobal
