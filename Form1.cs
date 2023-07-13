@@ -67,8 +67,7 @@ namespace QQIGrader
             {
                 case >= 80:
                     {
-                        if (grade > 100) return "Invalid";
-                        return "Distinction";
+                        return grade > 100 ? "Invalid" : "Distinction";
                     }
                 case >= 65:
                     {
@@ -80,8 +79,7 @@ namespace QQIGrader
                     }
                 default:
                     {
-                        if (grade < 0) return "Invalid";
-                        return "Unsuccessful";
+                        return grade < 0 ? "Invalid" : "Unsuccessful";
                     }
             }
         }
