@@ -50,7 +50,7 @@
             btnStart.Name = "btnStart";
             btnStart.Size = new Size(141, 55);
             btnStart.TabIndex = 0;
-            btnStart.Text = "Open CSV File";
+            btnStart.Text = "Run Tests from CSV";
             btnStart.UseVisualStyleBackColor = true;
             btnStart.Click += btnStart_Click;
             // 

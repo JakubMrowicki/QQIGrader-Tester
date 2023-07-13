@@ -12,40 +12,32 @@ namespace QQIGrader
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            if (btnStart.Text != "Run Tests")
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "CSV (*.csv)|*.csv";
+            if (ofd.ShowDialog() == DialogResult.OK)
             {
-                OpenFileDialog ofd = new OpenFileDialog();
-                ofd.Filter = "CSV (*.csv)|*.csv";
-                if (ofd.ShowDialog() == DialogResult.OK)
+                testCases = File.ReadAllLines(ofd.FileName).Skip(1).Select(x => TestCases.FromCsv(x)).ToList();
+            }
+            int passes = 0;
+            this.dataResults.Rows.Clear();
+            for (int i = 0; i < testCases.Count; i++)
+            {
+                bool testResult = testCases[i].Expected == getGrade(testCases[i].Input);
+                if (testResult)
                 {
-                    testCases = File.ReadAllLines(ofd.FileName).Skip(1).Select(x => TestCases.FromCsv(x)).ToList();
-                    lblResult.Text = "CSV loaded!";
-                    btnStart.Text = "Run Tests";
+                    passes++;
+                    txtRes.Text = $"{passes}/{testCases.Count}";
                 }
+                this.dataResults.Rows.Add($"{(i + 1)}", $"{testCases[i].Input}", $"{testCases[i].Expected}", getGrade(testCases[i].Input), $"{testResult.ToString()}");
+            }
+
+            if (passes == testCases.Count)
+            {
+                lblResult.Text = "All Test Passed!";
             }
             else
             {
-                int passes = 0;
-                this.dataResults.Rows.Clear();
-                for (int i = 0; i < testCases.Count; i++)
-                {
-                    bool testResult = testCases[i].Expected == getGrade(testCases[i].Input);
-                    if (testResult)
-                    {
-                        passes++;
-                        txtRes.Text = $"{passes}/{testCases.Count}";
-                    }
-                    this.dataResults.Rows.Add($"{(i + 1)}", $"{testCases[i].Input}", $"{testCases[i].Expected}", getGrade(testCases[i].Input), $"{testResult.ToString()}");
-                }
-
-                if (passes == testCases.Count)
-                {
-                    lblResult.Text = "All Test Passed!";
-                }
-                else
-                {
-                    lblResult.Text = "Some tests failed, see results below.";
-                }
+                lblResult.Text = "Some tests failed, see results below.";
             }
         }
 
