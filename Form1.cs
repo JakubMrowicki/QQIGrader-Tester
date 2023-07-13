@@ -36,11 +36,12 @@ namespace QQIGrader
                     {
                         MessageBox.Show("Your csv file is empty.", "Info");
                     }
-                } catch
+                }
+                catch
                 {
                     MessageBox.Show("Your csv file may be open in another program.", "Info");
                 }
-            } 
+            }
             else return;
         }
 
@@ -52,7 +53,7 @@ namespace QQIGrader
             {
                 bool testResult = testCases[i].Expected == getGrade(testCases[i].Input);
                 if (testResult) passes++;
-                this.dataResults.Rows.Add($"{(i + 1)}", $"{testCases[i].Input}", $"{testCases[i].Expected}", getGrade(testCases[i].Input), $"{(testResult ? "Pass" : "Fail")}");
+                this.dataResults.Rows.Add($"{i + 1}", $"{testCases[i].Input}", $"{testCases[i].Expected}", getGrade(testCases[i].Input), $"{(testResult ? "Pass" : "Fail")}");
                 this.dataResults.Rows[i].DefaultCellStyle.BackColor = testResult ? Color.Green : Color.Red;
             }
 
@@ -66,19 +67,19 @@ namespace QQIGrader
             {
                 case >= 80:
                     {
-                        return grade > 100 ? "Invalid" : "Distincton";
+                        return grade > 100 ? "Invalid" : "Distinction";
                     }
                 case >= 65:
                     {
                         return "Merit";
                     }
-                case > 50:
+                case >= 50:
                     {
                         return "Pass";
                     }
                 default:
                     {
-                        return grade < 0 ? "Invalid" : "Unsuccesful";
+                        return grade < 0 ? "Invalid" : "Unsuccessful";
                     }
             }
         }
