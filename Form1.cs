@@ -28,7 +28,7 @@ namespace QQIGrader
                     passes++;
                     txtRes.Text = $"{passes}/{testCases.Count}";
                 }
-                this.dataResults.Rows.Add($"{(i + 1)}", $"{testCases[i].Input}", $"{testCases[i].Expected}", getGrade(testCases[i].Input), $"{testResult.ToString()}");
+                this.dataResults.Rows.Add($"{(i + 1)}", $"{testCases[i].Input}", $"{testCases[i].Expected}", getGrade(testCases[i].Input), $"{(testResult ? "Pass" : "Fail")}");
             }
 
             if (passes == testCases.Count)
