@@ -1,4 +1,6 @@
 using Microsoft.VisualBasic.ApplicationServices;
+using System.IO;
+using System.Text;
 
 namespace QQIGrader
 {
@@ -16,8 +18,26 @@ namespace QQIGrader
             ofd.Filter = "CSV (*.csv)|*.csv";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                testCases = File.ReadAllLines(ofd.FileName).Skip(1).Select(x => TestCases.FromCsv(x)).ToList();
-            }
+                if (File.ReadAllLines(ofd.FileName).First().Length > 0)
+                {
+                    try
+                    {
+                        testCases = File.ReadAllLines(ofd.FileName).Skip(1).Select(x => TestCases.FromCsv(x)).ToList();
+                        runTests();
+                    } catch {
+                        MessageBox.Show("Error opening this file.", "Info");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Your csv file is empty.", "Info");
+                }
+            } 
+            else return;
+        }
+
+        private void runTests()
+        {
             int passes = 0;
             this.dataResults.Rows.Clear();
             for (int i = 0; i < testCases.Count; i++)
@@ -31,7 +51,7 @@ namespace QQIGrader
                 this.dataResults.Rows.Add($"{(i + 1)}", $"{testCases[i].Input}", $"{testCases[i].Expected}", getGrade(testCases[i].Input), $"{(testResult ? "Pass" : "Fail")}");
             }
 
-            if (passes == testCases.Count)
+            if (passes == testCases.Count && testCases.Count > 0)
             {
                 lblResult.Text = "All Test Passed!";
             }
@@ -123,11 +143,15 @@ namespace QQIGrader
                 MessageBox.Show("Nothing to export.", "Info");
             }
         }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 
     public class TestCases
     {
-        public int TestID;
         public int Input;
         public string Expected;
 
@@ -136,7 +160,6 @@ namespace QQIGrader
             string[] values = csvLine.Split(',');
             TestCases testCases = new()
             {
-                TestID = int.Parse(values[0]),
                 Input = int.Parse(values[1]),
                 Expected = values[2]
             };

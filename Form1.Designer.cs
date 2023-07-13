@@ -33,13 +33,14 @@
             lblResult = new Label();
             txtRes = new TextBox();
             dataResults = new DataGridView();
-            testCasesBindingSource = new BindingSource(components);
-            btnExport = new Button();
             TestID = new DataGridViewTextBoxColumn();
             Input = new DataGridViewTextBoxColumn();
             Expected = new DataGridViewTextBoxColumn();
             Actual = new DataGridViewTextBoxColumn();
             Result = new DataGridViewTextBoxColumn();
+            testCasesBindingSource = new BindingSource(components);
+            btnExport = new Button();
+            btnExit = new Button();
             ((System.ComponentModel.ISupportInitialize)dataResults).BeginInit();
             ((System.ComponentModel.ISupportInitialize)testCasesBindingSource).BeginInit();
             SuspendLayout();
@@ -86,20 +87,6 @@
             dataResults.Size = new Size(593, 361);
             dataResults.TabIndex = 3;
             // 
-            // testCasesBindingSource
-            // 
-            testCasesBindingSource.DataSource = typeof(TestCases);
-            // 
-            // btnExport
-            // 
-            btnExport.Location = new Point(14, 450);
-            btnExport.Name = "btnExport";
-            btnExport.Size = new Size(97, 23);
-            btnExport.TabIndex = 4;
-            btnExport.Text = "Export to CSV";
-            btnExport.UseVisualStyleBackColor = true;
-            btnExport.Click += btnExport_Click;
-            // 
             // TestID
             // 
             TestID.HeaderText = "Test ID";
@@ -132,13 +119,38 @@
             Result.HeaderText = "Result";
             Result.Name = "Result";
             Result.ReadOnly = true;
-            Result.Width = 90;
+            Result.Width = 95;
+            // 
+            // testCasesBindingSource
+            // 
+            testCasesBindingSource.DataSource = typeof(TestCases);
+            // 
+            // btnExport
+            // 
+            btnExport.Location = new Point(14, 450);
+            btnExport.Name = "btnExport";
+            btnExport.Size = new Size(97, 23);
+            btnExport.TabIndex = 4;
+            btnExport.Text = "Export to CSV";
+            btnExport.UseVisualStyleBackColor = true;
+            btnExport.Click += btnExport_Click;
+            // 
+            // btnExit
+            // 
+            btnExit.Location = new Point(510, 450);
+            btnExit.Name = "btnExit";
+            btnExit.Size = new Size(97, 23);
+            btnExit.TabIndex = 5;
+            btnExit.Text = "Exit";
+            btnExit.UseVisualStyleBackColor = true;
+            btnExit.Click += btnExit_Click;
             // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(621, 485);
+            Controls.Add(btnExit);
             Controls.Add(btnExport);
             Controls.Add(dataResults);
             Controls.Add(txtRes);
@@ -166,5 +178,6 @@
         private DataGridViewTextBoxColumn Expected;
         private DataGridViewTextBoxColumn Actual;
         private DataGridViewTextBoxColumn Result;
+        private Button btnExit;
     }
 }
